@@ -125,7 +125,7 @@ class NewVersion {
     if (iOSAppStoreCountry != null) {
       parameters.addAll({"country": iOSAppStoreCountry!});
     }
-    var uri = Uri.https("itunes.apple.com", "/lookup", parameters);
+    var uri = Uri.http("itunes.apple.com", "/lookup", parameters);
     final response = await http.get(uri);
     if (response.statusCode != 200) {
       debugPrint('Failed to query iOS App Store');
@@ -180,7 +180,7 @@ class NewVersion {
     } else {
       final scriptElements = document.getElementsByTagName('script');
       final infoScriptElement = scriptElements.firstWhere(
-            (elm) => elm.text.contains('key: \'ds:4\''),
+            (elm) => elm.text.contains('key: \'ds:5\''),
       );
 
       final param = infoScriptElement.text.substring(20, infoScriptElement.text.length - 2)
@@ -193,14 +193,12 @@ class NewVersion {
       final data =  parsed['data'];
 
       storeVersion = data[1][2][140][0][0][0];
-      releaseNotes = data[1][2][144][1][1];
     }
 
     return VersionStatus._(
       localVersion: _getCleanVersion(packageInfo.version),
       storeVersion: _getCleanVersion(forceAppVersion ?? storeVersion),
       appStoreLink: uri.toString(),
-      releaseNotes: releaseNotes,
     );
   }
   /// Shows the user a platform-specific alert about the app update. The user
