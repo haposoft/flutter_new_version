@@ -188,7 +188,8 @@ class NewVersion {
           .replaceAll('hash:', '"hash":')
           .replaceAll('data:', '"data":')
           .replaceAll('sideChannel:', '"sideChannel":')
-          .replaceAll('\'', '"');
+          .replaceAll('\'', '"')
+          .replaceAll('Let"s', 'Let\'s');
       final parsed = json.decode(param);
       final data =  parsed['data'];
 
